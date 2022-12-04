@@ -26,11 +26,11 @@ function App() {
     setPostArray({ day: day, subject: subject })
     console.log("MYdata: ", postArray)
     
-    updateData(postArray)
+   
   }
 
-
-  async function updateData(postArray){
+useEffect(()=>{
+  async function updateData(){
     // console.log("MYdata: ", postObject)
     const response = await fetch("http://localhost:3001/api", {
       
@@ -42,9 +42,9 @@ function App() {
           }
         })
     
-  } 
+  } updateData()
 
-
+}, [postArray])
   
   
   
