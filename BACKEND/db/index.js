@@ -1,11 +1,15 @@
-const { Pool } = require("pg");
+import PG from 'pg'
 
-const pool = new Pool({
-  connectionString: process.env.POSTGRES,
+const databaseUrl = process.env.POSTGRES_URL;
+
+// if (undefined === databaseUrl) {
+//   throw new Error(
+//     "Your database URL is undefined. Please fix this bug before continuing"
+//   );
+// }
+
+export const pool = new PG.Pool({
+  connectionString: databaseUrl,
 });
 
-module.exports = {
-  query: (text, params, callback) => {
-    return pool.query(text, params, callback);
-  },
-};
+

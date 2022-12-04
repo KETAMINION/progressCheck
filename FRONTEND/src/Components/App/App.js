@@ -7,8 +7,53 @@ function App() {
   const [day, setDay] = useState("");
   const [subject, setSubject] = useState("");
   const [daySubArr, setDaySubArr] = useState([]);
+  const [postArray, setPostArray] = useState([])
 
-  let daySubObj = {};
+  useEffect(()=> {
+    async function getData (){
+      const response = await fetch("http://localhost:3001/api")
+      const data = await response.json()
+      console.log(data)
+      setDaySubArr(data.payload)
+    }
+    getData()
+
+  }, [])
+    
+
+  
+  function buttonClick() {
+    setPostArray({ day: day, subject: subject })
+    console.log("MYdata: ", postArray)
+    
+    updateData(postArray)
+  }
+
+
+  async function updateData(postArray){
+    // console.log("MYdata: ", postObject)
+    const response = await fetch("http://localhost:3001/api", {
+      
+    method: "POST",
+          body: JSON.stringify(postArray),
+          mode: "cors",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+    
+  } 
+
+
+  
+  
+  
+ 
+  
+  
+
+
+  // let daySubObj = {};
   // let daySubArr = [{day: day}, {day: day}];
 
   function inputValueDay(e) {
@@ -18,21 +63,10 @@ function App() {
     setSubject(e.target.value);
   }
 
-  function buttonClick(e) {
-    daySubObj = { day: day, subject: subject };
-    setDaySubArr([...daySubArr, daySubObj]);
-    console.log(daySubArr);
-  }
 
-  useEffect(()=> {
-    async function getData (){
-      const response = await fetch("/api")
-      const data = await response.json()
-      console.log(data)
-    }
-    getData()
+  
 
-  }, [])
+ 
 
 
 
