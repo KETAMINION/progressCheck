@@ -6,10 +6,11 @@ import Input from "../Input/Input";
 
 function App() {
   const [day, setDay] = useState("");
-  const [subject, setSubject] = useState("");
+  // const [subject, setSubject] = useState("");
   const [daySubArr, setDaySubArr] = useState([]);
-  const [postArray, setPostArray] = useState([]);
+  // const [postArray, setPostArray] = useState([]);
   const [result, setResult] = useState("");
+  const [postObj, setPostObj] = useState({});
 
   useEffect(() => {
     async function getData() {
@@ -21,22 +22,25 @@ function App() {
     getData();
   }, [result]);
 
-  
-  function inputValue(e) {
-    setDay(e.target.value);
-    setSubject(e.target.value);
-    setPostArray({ day: day, subject: subject });
+  function inputValueDay(e) {
+    // setDay(e.target.value);
+    setPostObj({ ...postObj, day: e.target.value });
   }
-
+  function inputValueSubject(e) {
+    // setSubject(e.target.value);
+    setPostObj({ ...postObj, subject: e.target.value });
+  }
+  // function settingUpObj(){
+  //   setPostArray({ day: day, subject: subject });
+  // }
   function buttonClick() {
-    updateData(postArray);
+    updateData(postObj);
   }
-
-  async function updateData(postArray) {
-    if (JSON.stringify(postArray) !== "{}") {
+  async function updateData(postObj) {
+    if (JSON.stringify(postObj) !== "{}") {
       const response = await fetch("http://localhost:3001/api", {
         method: "POST",
-        body: JSON.stringify(postArray),
+        body: JSON.stringify(postObj),
         mode: "cors",
         headers: {
           "Content-Type": "application/json",
@@ -47,14 +51,12 @@ function App() {
     }
   }
 
-
-
   return (
     <div>
       <h1>100 Days of Code!</h1>
       <p>Edit Your progress here:</p>
-      <Input for="day" label="Day" handleChange={inputValue} />
-      <Input for="subject" label="Subject" handleChange={inputValue} />
+      <Input for="day" label="Day" handleChange={inputValueDay} />
+      <Input for="subject" label="Subject" handleChange={inputValueSubject} />
       <Button buttonText="Add" buttonClick={buttonClick} />
       <Button buttonText="Edit" />
       <Button buttonText="Delete" />

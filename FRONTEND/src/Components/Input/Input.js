@@ -4,7 +4,7 @@ function Input(props) {
   return (
     <div>
       <label for={props.for}>{props.label}</label>
-      <input type="text" onChange={props.handleChange}/>
+      <input value={props.value} type="text" onChange={props.handleChange}/>
     </div>
   );
 }
