@@ -1,6 +1,6 @@
 import PG from 'pg'
 
-const databaseUrl = process.env.POSTGRES_URL;
+const databaseUrl = process.env.POSTGRES;
 
 // if (undefined === databaseUrl) {
 //   throw new Error(

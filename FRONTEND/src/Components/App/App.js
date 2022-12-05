@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { useEffect, useState } from "react";
 import Button from "../Button/Button";
 import Display from "../Display/Display";
 import Input from "../Input/Input";
@@ -7,66 +8,44 @@ function App() {
   const [day, setDay] = useState("");
   const [subject, setSubject] = useState("");
   const [daySubArr, setDaySubArr] = useState([]);
-  const [postArray, setPostArray] = useState([])
+  const [postArray, setPostArray] = useState([]);
+  const [result, setResult] = useState("");
 
-  useEffect(()=> {
-    async function getData (){
-      const response = await fetch("http://localhost:3001/api")
-      const data = await response.json()
-      console.log(data)
-      setDaySubArr(data.payload)
+  useEffect(() => {
+    async function getData() {
+      const response = await fetch("http://localhost:3001/api");
+      const data = await response.json();
+      console.log(data);
+      setDaySubArr(data.payload);
     }
-    getData()
-
-  }, [])
-    
+    getData();
+  }, [result]);
 
   
-  function buttonClick() {
-    setPostArray({ day: day, subject: subject })
-    console.log("MYdata: ", postArray)
-    
-   
-  }
-
-useEffect(()=>{
-  async function updateData(){
-    // console.log("MYdata: ", postObject)
-    const response = await fetch("http://localhost:3001/api", {
-      
-    method: "POST",
-          body: JSON.stringify(postArray),
-          mode: "cors",
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-    
-  } updateData()
-
-}, [postArray])
-  
-  
-  
- 
-  
-  
-
-
-  // let daySubObj = {};
-  // let daySubArr = [{day: day}, {day: day}];
-
-  function inputValueDay(e) {
+  function inputValue(e) {
     setDay(e.target.value);
-  }
-  function inputValueSubject(e) {
     setSubject(e.target.value);
+    setPostArray({ day: day, subject: subject });
   }
 
+  function buttonClick() {
+    updateData(postArray);
+  }
 
-  
-
- 
+  async function updateData(postArray) {
+    if (JSON.stringify(postArray) !== "{}") {
+      const response = await fetch("http://localhost:3001/api", {
+        method: "POST",
+        body: JSON.stringify(postArray),
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      setResult(result);
+    }
+  }
 
 
 
@@ -74,8 +53,8 @@ useEffect(()=>{
     <div>
       <h1>100 Days of Code!</h1>
       <p>Edit Your progress here:</p>
-      <Input for="day" label="Day" handleChange={inputValueDay} />
-      <Input for="subject" label="Subject" handleChange={inputValueSubject} />
+      <Input for="day" label="Day" handleChange={inputValue} />
+      <Input for="subject" label="Subject" handleChange={inputValue} />
       <Button buttonText="Add" buttonClick={buttonClick} />
       <Button buttonText="Edit" />
       <Button buttonText="Delete" />
