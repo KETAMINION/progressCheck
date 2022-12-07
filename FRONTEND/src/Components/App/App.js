@@ -1,16 +1,26 @@
 import React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import Button from "../Button/Button";
 import Display from "../Display/Display";
 import Input from "../Input/Input";
+import {DarkModeContext} from '../DarkModeContext.js'
+
+import './App.css'
 
 function App() {
   const [day, setDay] = useState("");
-  // const [subject, setSubject] = useState("");
+  const [subject, setSubject] = useState("");
   const [daySubArr, setDaySubArr] = useState([]);
   // const [postArray, setPostArray] = useState([]);
   const [result, setResult] = useState("");
   const [postObj, setPostObj] = useState({});
+
+  const {darkMode}  = useContext(DarkModeContext)
+  const {toggleDarkMode} = useContext(DarkModeContext)
+
+ 
+
+  
 
   useEffect(() => {
     async function getData() {
@@ -23,18 +33,22 @@ function App() {
   }, [result]);
 
   function inputValueDay(e) {
-    // setDay(e.target.value);
+    setDay(e.target.value);
     setPostObj({ ...postObj, day: e.target.value });
   }
   function inputValueSubject(e) {
-    // setSubject(e.target.value);
+    setSubject(e.target.value);
     setPostObj({ ...postObj, subject: e.target.value });
   }
   // function settingUpObj(){
   //   setPostArray({ day: day, subject: subject });
   // }
+
+  
   function buttonClick() {
     updateData(postObj);
+    setDay("");
+    setSubject("")
   }
   async function updateData(postObj) {
     if (JSON.stringify(postObj) !== "{}") {
@@ -52,14 +66,19 @@ function App() {
   }
 
   return (
-    <div>
+    
+    <div className={darkMode ? `dark` : `app-container`}>
+      
       <h1>100 Days of Code!</h1>
       <p>Edit Your progress here:</p>
-      <Input for="day" label="Day" handleChange={inputValueDay} />
-      <Input for="subject" label="Subject" handleChange={inputValueSubject} />
+      <Input value={day} for="day" label="Day" handleChange={inputValueDay} />
+      <Input value={subject} for="subject" label="Subject" handleChange={inputValueSubject} />
       <Button buttonText="Add" buttonClick={buttonClick} />
       <Button buttonText="Edit" />
       <Button buttonText="Delete" />
+      <Button buttonText={darkMode ? `Light Mode` : `Dark Mode`} buttonClick={toggleDarkMode} />
+     
+      
       <ul>
         {daySubArr.map((element) => {
           return (
@@ -67,10 +86,12 @@ function App() {
               displayDay={element.day}
               displaySubject={element.subject}
             />
-          );
+          )
         })}
       </ul>
+      
     </div>
+   
   );
 }
 
