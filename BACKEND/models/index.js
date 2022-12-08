@@ -10,5 +10,7 @@ export async function updateDataModels (data){
     return subjectArray
 }
 
-
-
+export async function patchDataModels (data){
+    const subjectArray = await pool.query (`UPDATE progressCheck SET day=$1, subject=$2 WHERE id=$3 RETURNING *`, [data.day, data.subject, data.id])
+    return subjectArray.rows
+}
