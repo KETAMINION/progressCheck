@@ -79,7 +79,7 @@ function App() {
       <Button buttonText={darkMode ? `Light Mode` : `Dark Mode`} buttonClick={toggleDarkMode} />
      
       
-      <ul>
+      <ul className="ul-container">
         {daySubArr.map((element) => {
           return (
             <Display

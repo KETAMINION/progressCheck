@@ -1,9 +1,14 @@
 .dark {
     background-color: black;
     color: white;
+    height: 100vh;
 }
 
 .app-container {
     background-color: white;
     color: black;
+    height: 100%;
+}
+.ul-container{
+    height: 80%;
 }
