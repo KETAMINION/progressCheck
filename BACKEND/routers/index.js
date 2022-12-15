@@ -1,6 +1,6 @@
 import express from "express";
 const router = express.Router();
-import { getDataModels, updateDataModels } from "../models/index.js"
+import { getDataModels, updateDataModels, editButtonModels } from "../models/index.js"
 
 router.get("/", async function(req, res) {
     const result = await getDataModels()
@@ -12,5 +12,9 @@ router.post("/", async function(req,res) {
     return res.json({success: true, payload: result}) 
 })
 
+router.patch("/:id", async function(req,res) {
+    const result = await editButtonModels(req.body, req.params.id)
+    return res.json({success: true, payload: result}) 
+})
 
 export default router
