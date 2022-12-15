@@ -67,6 +67,30 @@ function App() {
     }
   }
 
+  async function patchData(postObj,id) {
+    if (JSON.stringify(postObj) !== "{}") {
+      const response = await fetch(`http://localhost:3001/api/${id}`, {
+        method: "PATCH",
+        body: JSON.stringify(postObj),
+        mode: "cors",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      const result = await response.json();
+      setResult(result);
+    }
+  }
+
+  function handleEditButtton(){
+    let editDay = prompt("Edit day", "adad");
+    let editSubject = prompt("Edit subject");
+   
+    setPostObj({ ...postObj, day: editDay, subject: editSubject });
+  }
+
+  console.log(postObj)
+
   return (
     
     <div className={darkMode ? `dark` : `app-container`}>
@@ -76,7 +100,7 @@ function App() {
       <Input value={day} for="day" label="Day" handleChange={inputValueDay} />
       <Input value={subject} for="subject" label="Subject" handleChange={inputValueSubject} />
       <Button buttonText="Add" buttonClick={buttonClick} />
-      <Button buttonText="Edit" />
+      
       <Button buttonText="Delete" />
       <Button buttonText={darkMode ? `Light Mode` : `Dark Mode`} buttonClick={toggleDarkMode} />
      
@@ -85,10 +109,12 @@ function App() {
         {daySubArr.map((element) => {
           return (
             <Display
+              displayId={element.id}
               displayDay={element.day}
               displaySubject={element.subject}
               displayId={element.id}
             />
+
           )
         })}
       </ul>
