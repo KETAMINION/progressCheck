@@ -4,6 +4,7 @@ import Button from "../Button/Button";
 import Display from "../Display/Display";
 import Input from "../Input/Input";
 import {DarkModeContext} from '../DarkModeContext.js'
+import { UseEffectTrigger } from "../UseEffectTrigger.js";
 
 import './App.css'
 
@@ -18,7 +19,8 @@ function App() {
   const {darkMode}  = useContext(DarkModeContext)
   const {toggleDarkMode} = useContext(DarkModeContext)
 
- 
+  const {effectTrigger}=useContext(UseEffectTrigger)
+  const {toggleEffectTrigger}=useContext(UseEffectTrigger)
 
   
 
@@ -30,7 +32,7 @@ function App() {
       setDaySubArr(data.payload);
     }
     getData();
-  }, [result]);
+  }, [result, effectTrigger]);
 
   function inputValueDay(e) {
     setDay(e.target.value);
@@ -85,6 +87,7 @@ function App() {
             <Display
               displayDay={element.day}
               displaySubject={element.subject}
+              displayId={element.id}
             />
           )
         })}
