@@ -10,7 +10,6 @@ function Display(props) {
   const [day, setDay] = useState("");
   const [subject, setSubject] = useState("");
   
-  const {effectTrigger}=useContext(UseEffectTrigger)
   const {toggleEffectTrigger}=useContext(UseEffectTrigger)
   
   function inputValueDay(e) {
@@ -42,8 +41,7 @@ function Display(props) {
   function editDoneButton(){
     setIsEditing(!isEditing)
   }
-  console.log("ten object",patchObj)
-  
+
   return (
     <div>
       {isEditing ? (
@@ -54,7 +52,7 @@ function Display(props) {
         </div>
       ) : (
         <div>
-        <li className={darkMode ? `dark` : `app-container`}>
+        <li key={props.liKey} className={darkMode ? `dark` : `app-container`}>
           {props.displayDay} {props.displaySubject}
         <button onClick={editDoneButton}>Edit</button>
         </li>
