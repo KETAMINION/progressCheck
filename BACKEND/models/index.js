@@ -1,7 +1,7 @@
 import {pool} from "../db/index.js"
 
-export async function getDataModels (){
-    const subjectArray = await pool.query ("SELECT * FROM progressCheck ORDER BY id ASC")
+export async function getDataModelsByEmail (email){
+    const subjectArray = await pool.query ("SELECT * FROM progressCheck WHERE email=$1 ORDER BY id ASC", [email])
     return subjectArray.rows
 }
 
@@ -14,7 +14,3 @@ export async function editButtonModels (data, id){
     return subjectArray.rows
 }
 
-export async function patchDataModels (data){
-    const subjectArray = await pool.query (`UPDATE progressCheck SET day=$1, subject=$2 WHERE id=$3 RETURNING *`, [data.day, data.subject, data.id])
-    return subjectArray.rows
-}

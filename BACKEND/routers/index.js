@@ -1,9 +1,9 @@
 import express from "express";
 const router = express.Router();
-import { getDataModels, updateDataModels, editButtonModels } from "../models/index.js"
+import { getDataModelsByEmail, updateDataModels, editButtonModels } from "../models/index.js"
 
 router.get("/", async function(req, res) {
-    const result = await getDataModels()
+    const result = await getDataModelsByEmail(req.query.email)
     return res.json({success: true, payload: result})
 })
 
