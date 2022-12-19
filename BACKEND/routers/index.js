@@ -13,8 +13,12 @@ router.post("/", async function(req,res) {
 })
 
 router.patch("/:id", async function(req,res) {
-    const result = await editButtonModels(req.body, req.params.id)
-    return res.json({success: true, payload: result}) 
+    
+        const result = await editButtonModels(req.body, req.params.id)
+        
+        return res.json({success: true, payload: result}) 
+    
+    
 })
 
 export default router

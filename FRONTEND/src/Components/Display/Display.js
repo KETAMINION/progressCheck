@@ -13,6 +13,7 @@ function Display(props) {
   const {toggleEffectTrigger}=useContext(UseEffectTrigger)
   
   function inputValueDay(e) {
+
     setDay(e.target.value);
     setPatchObj({ ...patchObj, day: e.target.value });
     console.log(day)
@@ -23,6 +24,7 @@ function Display(props) {
   }
   
   async function patchData(patchObj, id) {
+    
     if (JSON.stringify(patchObj) !== "{}") {
       const response = await fetch(`http://localhost:3001/api/${id}`, {
         method: "PATCH",
@@ -38,7 +40,9 @@ function Display(props) {
     toggleEffectTrigger()
   }
   
-  function editDoneButton(){
+  function editDoneButton(day, subject){
+    setPatchObj({day: day, subject: subject})
+    console.log(patchObj)
     setIsEditing(!isEditing)
   }
 
@@ -54,7 +58,7 @@ function Display(props) {
         <div>
         <li key={props.liKey} className={darkMode ? `dark` : `app-container`}>
           {props.displayDay} {props.displaySubject}
-        <button onClick={editDoneButton}>Edit</button>
+        <button onClick={()=>{editDoneButton(props.displayDay, props.displaySubject)}}>Edit</button>
         </li>
         </div>
       )}
