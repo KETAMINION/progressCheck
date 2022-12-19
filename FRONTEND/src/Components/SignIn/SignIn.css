@@ -1,0 +1,15 @@
+.signin-displayed-container{
+    height: 300px;
+    width: 200px;
+    background-color: cornflowerblue;
+    position: absolute;
+    top:50%;
+    left:50%;
+    transform: translate(-50%,50%);
+    display: block;
+
+}
+
+.signin-hidden{
+    display: hidden;
+}

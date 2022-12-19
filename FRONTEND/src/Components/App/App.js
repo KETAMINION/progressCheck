@@ -15,7 +15,7 @@ import { Link } from "react-router-dom";
 import Popup from 'reactjs-popup';
 
 function App() {
-  
+  const [signinPopup, setSigninPopup]=useState(true)
   const { darkMode } = useContext(DarkModeContext);
   const { toggleDarkMode } = useContext(DarkModeContext);
   const { user, logout } = UserAuth();
@@ -39,7 +39,7 @@ function App() {
           <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
-        <p>hello</p>
+        <p>DATE</p>
       )}
       <Routes>
         <Route
@@ -52,9 +52,9 @@ function App() {
                 buttonText={darkMode ? `Light Mode` : `Dark Mode`}
                 buttonClick={toggleDarkMode}
               />
-              <SignIn/>
-
-
+              {/* <Button buttonText={signinPopup?"X":"Sign In"} buttonClick={()=>{setSigninPopup(!signinPopup)}}/> */}
+              {signinPopup?<SignIn displayButtonText={signinPopup?"X":"Sign In"} displayButtonClick={()=>{setSigninPopup(!signinPopup)}} /> : <Button buttonText="Sign In" buttonClick={()=>{setSigninPopup(!signinPopup)}}/>}
+              
             </div>
           }
         />

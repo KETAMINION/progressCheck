@@ -1,13 +1,17 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import ProgressPage from "../ProgressPage/ProgressPage";
+import "./SignIn.css";
+import Button from "../Button/Button";
 
-const SignIn = () => {
+const SignIn = (props) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
   const { signIn } = UserAuth();
+  const [signinPopup, setSigninPopup] = useState(true);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,7 +27,10 @@ const SignIn = () => {
 
   return (
     <div className="signin-container">
-      <div>
+      <div className="closing-button-container">
+        <button onClick={props.displayButtonClick}>X</button>
+      </div>
+      <div className="signin-container-header">
         <h1>Sign in to your account</h1>
         <p>
           Don't have an account yet?
@@ -31,23 +38,18 @@ const SignIn = () => {
         </p>
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="signip-email-container">
+        <div className="signin-container-main">
           <label>Email Address</label>
-          <input
-            onChange={(e) => setEmail(e.target.value)}
-            type="email"
-          />
-        </div>
-        <div className="signup-password-container">
+          <input onChange={(e) => setEmail(e.target.value)} type="email" />
           <label>Password</label>
           <input
             onChange={(e) => setPassword(e.target.value)}
             type="password"
           />
         </div>
-        <button>
-          Sign In
-        </button>
+        <div className="signin-container-footer">
+          <button>Sign In</button>
+        </div>
       </form>
     </div>
   );
