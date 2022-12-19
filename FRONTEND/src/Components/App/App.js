@@ -11,8 +11,11 @@ import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { UserAuth } from "../context/AuthContext";
+import { Link } from "react-router-dom";
+import Popup from 'reactjs-popup';
 
 function App() {
+  
   const { darkMode } = useContext(DarkModeContext);
   const { toggleDarkMode } = useContext(DarkModeContext);
   const { user, logout } = UserAuth();
@@ -30,8 +33,14 @@ function App() {
 
   return (
     <div className={darkMode ? `dark` : `app-container`}>
-
-      {user ? <button onClick={handleLogout}>Logout</button> : <p>hello</p>}
+      {user ? (
+        <div className="user-logout-container">
+          <a href="/Account">{user.email}</a>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
+      ) : (
+        <p>hello</p>
+      )}
       <Routes>
         <Route
           path="/"
@@ -43,7 +52,9 @@ function App() {
                 buttonText={darkMode ? `Light Mode` : `Dark Mode`}
                 buttonClick={toggleDarkMode}
               />
-              <SignIn />
+              <SignIn/>
+
+
             </div>
           }
         />

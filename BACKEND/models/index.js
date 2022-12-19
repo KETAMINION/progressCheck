@@ -6,7 +6,7 @@ export async function getDataModelsByEmail (email){
 }
 
 export async function updateDataModels (data){
-    const subjectArray = await pool.query (`INSERT INTO progressCheck (user_id, day, subject) VALUES (1, $1, $2)`, [data.day, data.subject])
+    const subjectArray = await pool.query (`INSERT INTO progressCheck (user_id, day, subject, email) VALUES (1, $1, $2, $3)`, [data.day, data.subject, data.email])
     return subjectArray
 }
 export async function editButtonModels (data, id){

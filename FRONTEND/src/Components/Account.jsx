@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { UserAuth } from './context/AuthContext';
 
@@ -23,6 +24,7 @@ const Account = () => {
       <button onClick={handleLogout}>
         Logout
       </button>
+      <a href="/progresspage">Progress page</a>
     </div>
   );
 };

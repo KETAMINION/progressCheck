@@ -5,6 +5,7 @@ import Display from "../Display/Display";
 import Input from "../Input/Input";
 import { DarkModeContext } from "../DarkModeContext.js";
 import { UseEffectTrigger } from "../UseEffectTrigger.js";
+import { UserAuth } from "../context/AuthContext";
 
 
 function ProgressPage() {
@@ -14,21 +15,23 @@ function ProgressPage() {
   // const [postArray, setPostArray] = useState([]);
   const [result, setResult] = useState("");
   const [postObj, setPostObj] = useState({});
+  const { user } = UserAuth();
 
   const { darkMode } = useContext(DarkModeContext);
   const { toggleDarkMode } = useContext(DarkModeContext);
 
   const { effectTrigger } = useContext(UseEffectTrigger);
-
+  const email = user.email
+ 
   useEffect(() => {
-    async function getData() {
-      const response = await fetch(`http://localhost:3001/api`);
+    async function getData(em) {
+      const response = await fetch(`http://localhost:3001/api?email=${em}`);
       const data = await response.json();
-      console.log(data);
+      console.log(em);
       setDaySubArr(data.payload);
     }
-    getData();
-  }, [result, effectTrigger]);
+    getData(email);
+  }, [user, result, effectTrigger]);
 
   function inputValueDay(e) {
     setDay(e.target.value);
@@ -36,7 +39,7 @@ function ProgressPage() {
   }
   function inputValueSubject(e) {
     setSubject(e.target.value);
-    setPostObj({ ...postObj, subject: e.target.value });
+    setPostObj({ ...postObj, subject: e.target.value, email: email });
   }
 
   function buttonClick() {
