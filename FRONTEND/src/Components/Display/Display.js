@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useContext } from "react";
 import { DarkModeContext } from "../DarkModeContext.js";
 import { UseEffectTrigger } from "../UseEffectTrigger.js";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 function Display(props) {
   const { darkMode } = useContext(DarkModeContext);
@@ -9,13 +11,14 @@ function Display(props) {
   const [patchObj, setPatchObj] = useState({});
   const [day, setDay] = useState("");
   const [subject, setSubject] = useState("");
+
   
   const {toggleEffectTrigger}=useContext(UseEffectTrigger)
   
   function inputValueDay(e) {
 
     setDay(e.target.value);
-    setPatchObj({ ...patchObj, day: e.target.value });
+    setPatchObj({ ...patchObj, day: e.target.value});
     console.log(day)
   }
   function inputValueSubject(e) {
@@ -50,7 +53,8 @@ function Display(props) {
     <div>
       {isEditing ? (
         <div>
-          <input onChange={inputValueDay} type="text" defaultValue={props.displayDay} />
+        
+          <input type="date" label="Day" defaultValue={props.displayDay} onChange={inputValueDay}/>
           <input onChange={inputValueSubject} type="text" defaultValue={props.displaySubject} />
           <button id={props.displayId} onClick={()=>{patchData(patchObj, props.displayId)}}>Done</button>
         </div>

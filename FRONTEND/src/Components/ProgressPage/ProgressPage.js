@@ -8,14 +8,15 @@ import { UseEffectTrigger } from "../UseEffectTrigger.js";
 import { UserAuth } from "../context/AuthContext";
 
 
+
 function ProgressPage() {
   const [day, setDay] = useState("");
   const [subject, setSubject] = useState("");
   const [daySubArr, setDaySubArr] = useState([]);
-  // const [postArray, setPostArray] = useState([]);
   const [result, setResult] = useState("");
   const [postObj, setPostObj] = useState({});
   const { user } = UserAuth();
+
 
   const { darkMode } = useContext(DarkModeContext);
   const { toggleDarkMode } = useContext(DarkModeContext);
@@ -33,9 +34,10 @@ function ProgressPage() {
     getData(email);
   }, [user, result, effectTrigger]);
 
-  function inputValueDay(e) {
+  function inputValueDate(e) {
     setDay(e.target.value);
-    setPostObj({ ...postObj, day: e.target.value });
+    setPostObj({ ...postObj, day: e.target.value});
+    
   }
   function inputValueSubject(e) {
     setSubject(e.target.value);
@@ -46,6 +48,7 @@ function ProgressPage() {
     updateData(postObj);
     setDay("");
     setSubject("");
+    console.log(day)
   }
   async function updateData(postObj) {
     if (JSON.stringify(postObj) !== "{}") {
@@ -67,10 +70,13 @@ function ProgressPage() {
 
       <h1>100 Days of Code!</h1>
       <p>Edit Your progress here:</p>
-      <Input value={day} for="day" label="Day" handleChange={inputValueDay} />
+
+      <Input type="date" label="Day"  handleChange={inputValueDate}/>
+      
       <Input
         value={subject}
         for="subject"
+        type="text"
         label="Subject"
         handleChange={inputValueSubject}
       />
@@ -90,6 +96,7 @@ function ProgressPage() {
               displayDay={element.day}
               displaySubject={element.subject}
               liKey={element.id}
+
             />
           );
         })}
