@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 
-const SignUp = () => {
+const SignUp = (props) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('')
@@ -27,9 +27,7 @@ const SignUp = () => {
         <h1>Sign up for a free account</h1>
         <p>
           Already have an account yet?{' '}
-          <Link to='/'>
-            Sign in.
-          </Link>
+          <button onClick={props.signInButton}>Sign In</button>
         </p>
       </div>
       <form onSubmit={handleSubmit}>

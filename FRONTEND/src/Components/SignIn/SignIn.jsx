@@ -4,6 +4,7 @@ import { UserAuth } from "../context/AuthContext";
 import ProgressPage from "../ProgressPage/ProgressPage";
 import "./SignIn.css";
 import Button from "../Button/Button";
+import SignUp from "../SignUp/SignUp"
 
 const SignIn = (props) => {
   const [email, setEmail] = useState("");
@@ -27,14 +28,14 @@ const SignIn = (props) => {
 
   return (
     <div className="signin-container">
-      <div className="closing-button-container">
+      {signinPopup?(<div className="signin-element"><div className="closing-button-container">
         <button onClick={props.displayButtonClick}>X</button>
       </div>
       <div className="signin-container-header">
         <h1>Sign in to your account</h1>
         <p>
           Don't have an account yet?
-          <Link to="/signup">Sign up.</Link>
+          <button onClick={()=>{setSigninPopup(!signinPopup)}}>Sign Up</button>
         </p>
       </div>
       <form onSubmit={handleSubmit}>
@@ -50,7 +51,8 @@ const SignIn = (props) => {
         <div className="signin-container-footer">
           <button>Sign In</button>
         </div>
-      </form>
+      </form></div>):<SignUp signInButton={()=>{setSigninPopup(!signinPopup)}}/>}
+      
     </div>
   );
 };
