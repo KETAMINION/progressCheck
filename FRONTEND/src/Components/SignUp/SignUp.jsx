@@ -14,7 +14,7 @@ const SignUp = (props) => {
     setError('');
     try {
       await createUser(email, password);
-      navigate('/account')
+      navigate('/progresspage')
     } catch (e) {
       setError(e.message);
       console.log(e.message);

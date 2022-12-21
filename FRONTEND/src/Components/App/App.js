@@ -33,13 +33,15 @@ function App() {
 
   return (
     <div className={darkMode ? `dark` : `app-container`}>
-      {user ? (
+    {user? <ProgressPage/> : (
+      <div>
+      {user? (
         <div className="user-logout-container">
           <a href="/Account">{user.email}</a>
           <button onClick={handleLogout}>Logout</button>
         </div>
       ) : (
-        <p>DATE</p>
+        null
       )}
       <Routes>
         <Route
@@ -59,7 +61,7 @@ function App() {
           }
         />
         <Route path="/Account" element={<Account />} />
-        <Route path="/SignUp" element={<SignUp />} />
+        {/* <Route path="/SignUp" element={<SignUp />} /> */}
         <Route
           path="/ProgressPage"
           element={
@@ -68,7 +70,7 @@ function App() {
             </ProtectedRoute>
           }
         />
-      </Routes>
+      </Routes></div>)}
     </div>
   );
 }

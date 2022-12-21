@@ -6,6 +6,7 @@ import Input from "../Input/Input";
 import { DarkModeContext } from "../DarkModeContext.js";
 import { UseEffectTrigger } from "../UseEffectTrigger.js";
 import { UserAuth } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -15,7 +16,8 @@ function ProgressPage() {
   const [daySubArr, setDaySubArr] = useState([]);
   const [result, setResult] = useState("");
   const [postObj, setPostObj] = useState({});
-  const { user } = UserAuth();
+  const { user, logout } = UserAuth();
+  const navigate = useNavigate();
 
 
   const { darkMode } = useContext(DarkModeContext);
@@ -65,11 +67,30 @@ function ProgressPage() {
     }
   }
 
+  
+  
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      navigate("/");
+      console.log("You are logged out");
+    } catch (e) {
+      console.log(e.message);
+    }
+  };
+
   return (
     <div className={darkMode ? `dark` : `app-container`}>
 
       <h1>100 Days of Code!</h1>
       <p>Edit Your progress here:</p>
+    
+      
+        <div className="user-logout-container">
+          <a href="/Account">{user.email}</a>
+          <button onClick={handleLogout}>Logout</button>
+        </div>
 
       <Input type="date" label="Day"  handleChange={inputValueDate}/>
       
