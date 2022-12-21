@@ -14,3 +14,8 @@ export async function editButtonModels (data, id){
     return subjectArray.rows
 }
 
+export async function deleteButtonModels (id){
+    const subjectArray = await pool.query (`DELETE FROM progressCheck WHERE id=$1 RETURNING*`, [id])
+    return subjectArray.rows
+}
+

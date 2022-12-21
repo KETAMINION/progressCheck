@@ -49,6 +49,18 @@ function Display(props) {
     setIsEditing(!isEditing)
   }
 
+  async function deleteButton(id) {
+    const response = await fetch(`http://localhost:3001/api/${id}`, {
+      method: "DELETE",
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const result = await response.json();
+    toggleEffectTrigger()
+  }
+
   return (
     <div>
       {isEditing ? (
@@ -57,6 +69,7 @@ function Display(props) {
           <input type="date" label="Day" defaultValue={props.displayDay} onChange={inputValueDay}/>
           <input onChange={inputValueSubject} type="text" defaultValue={props.displaySubject} />
           <button id={props.displayId} onClick={()=>{patchData(patchObj, props.displayId)}}>Done</button>
+          <button id={props.displayId} onClick={()=>{deleteButton(props.displayId)}}>Delete</button>
         </div>
       ) : (
         <div>
